@@ -56,7 +56,7 @@ function Calculator() {
     );
 
     const res = await axios.post(
-      "http://localhost:8080/calc/check",
+      "https://vault-backend-i1fo.onrender.com/calc/check",
       {
         userId: user.id,
         result: result.toString()

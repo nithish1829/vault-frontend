@@ -69,7 +69,7 @@ function Register() {
 
       await axios.post(
 
-        "http://localhost:8080/auth/register",
+        "https://vault-backend-i1fo.onrender.com/auth/register",
 
         {
           username,

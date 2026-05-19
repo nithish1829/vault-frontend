@@ -45,7 +45,7 @@ function Vault() {
     try {
 
       const res = await axios.get(
-        `http://localhost:8080/files/${user.id}`,
+        `https://vault-backend-i1fo.onrender.com/files/${user.id}`,
         authHeader
       );
 
@@ -119,7 +119,7 @@ function Vault() {
     try {
 
       await axios.post(
-        "http://localhost:8080/files/upload",
+        "https://vault-backend-i1fo.onrender.com/files/upload",
         formData,
         {
           headers: {
@@ -161,7 +161,7 @@ function Vault() {
   const renderFilePreview = (file) => {
 
     const fileUrl =
-      `http://localhost:8080/uploads/${file.fileUrl}`;
+      `https://vault-backend-i1fo.onrender.com/uploads/${file.fileUrl}`;
 
     // 🔥 IMAGE
     if (
@@ -485,7 +485,7 @@ function Vault() {
 
               {/* 🔓 OPEN */}
               <a
-                href={`http://localhost:8080/uploads/${file.fileUrl}`}
+                href={`https://vault-backend-i1fo.onrender.com/uploads/${file.fileUrl}`}
                 target="_blank"
                 rel="noreferrer"
                 style={{
@@ -509,7 +509,7 @@ function Vault() {
 
                     const response =
                       await fetch(
-                        `http://localhost:8080/uploads/${file.fileUrl}`
+                        `https://vault-backend-i1fo.onrender.com/uploads/${file.fileUrl}`
                       );
 
                     const blob =
@@ -547,7 +547,7 @@ function Vault() {
 
                     // 🔥 DELETE FROM VAULT
                     await axios.delete(
-                      `http://localhost:8080/files/delete/${file.id}`,
+                      `https://vault-backend-i1fo.onrender.com/files/delete/${file.id}`,
                       authHeader
                     );
 
