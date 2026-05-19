@@ -3,20 +3,13 @@ import axios from "axios";
 import Swal from "sweetalert2";
 
 function Vault() {
+  const [files, setFiles] = useState([]);
 
-  const [files, setFiles] =
-    useState([]);
+  const [selectedFile, setSelectedFile] = useState(null);
 
-  const [selectedFile, setSelectedFile] =
-    useState(null);
+  const token = localStorage.getItem("token");
 
-  const token =
-    localStorage.getItem("token");
-
-  const user =
-    JSON.parse(
-      localStorage.getItem("user")
-    );
+  const user = JSON.parse(localStorage.getItem("user"));
 
   // 🔥 AUTH HEADER
   const authHeader = {
@@ -26,33 +19,26 @@ function Vault() {
   };
 
   useEffect(() => {
-
     // 🔥 NO LOGIN
     if (!token || !user) {
-
       window.location.href = "/";
 
       return;
     }
 
     fetchFiles();
-
   }, []);
 
   // 🔥 FETCH FILES
   const fetchFiles = async () => {
-
     try {
-
       const res = await axios.get(
         `https://vault-backend-i1fo.onrender.com/files/${user.id}`,
-        authHeader
+        authHeader,
       );
 
       setFiles(res.data);
-
     } catch (err) {
-
       console.error(err);
 
       logoutUser();
@@ -61,14 +47,11 @@ function Vault() {
 
   // 🔥 LOGOUT
   const logoutUser = () => {
-
     localStorage.removeItem("token");
 
     localStorage.removeItem("user");
 
-    localStorage.removeItem(
-      "vaultUnlocked"
-    );
+    localStorage.removeItem("vaultUnlocked");
 
     Swal.fire({
       icon: "success",
@@ -81,17 +64,13 @@ function Vault() {
     });
 
     setTimeout(() => {
-
       window.location.href = "/";
-
     }, 1500);
   };
 
   // 🔥 UPLOAD FILE
   const uploadFile = async () => {
-
     if (!selectedFile) {
-
       Swal.fire({
         icon: "warning",
         title: "Select File ⚠️",
@@ -103,32 +82,22 @@ function Vault() {
       return;
     }
 
-    const formData =
-      new FormData();
+    const formData = new FormData();
 
-    formData.append(
-      "file",
-      selectedFile
-    );
+    formData.append("file", selectedFile);
 
-    formData.append(
-      "userId",
-      user.id
-    );
+    formData.append("userId", user.id);
 
     try {
-
       await axios.post(
         "https://vault-backend-i1fo.onrender.com/files/upload",
         formData,
         {
           headers: {
-            Authorization:
-              `Bearer ${token}`,
-            "Content-Type":
-              "multipart/form-data",
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
           },
-        }
+        },
       );
 
       Swal.fire({
@@ -142,9 +111,7 @@ function Vault() {
       setSelectedFile(null);
 
       fetchFiles();
-
     } catch (err) {
-
       console.error(err);
 
       Swal.fire({
@@ -159,17 +126,10 @@ function Vault() {
 
   // 🔥 FILE TYPE CHECK
   const renderFilePreview = (file) => {
-
-    const fileUrl =
-      `https://vault-backend-i1fo.onrender.com/uploads/${file.fileUrl}`;
+    const fileUrl = `https://vault-backend-i1fo.onrender.com/uploads/${file.fileUrl}`;
 
     // 🔥 IMAGE
-    if (
-      file.fileUrl.match(
-        /\.(jpg|jpeg|png|gif|webp)$/i
-      )
-    ) {
-
+    if (file.fileUrl.match(/\.(jpg|jpeg|png|gif|webp)$/i)) {
       return (
         <img
           src={fileUrl}
@@ -185,12 +145,7 @@ function Vault() {
     }
 
     // 🔥 VIDEO
-    if (
-      file.fileUrl.match(
-        /\.(mp4|webm|ogg)$/i
-      )
-    ) {
-
+    if (file.fileUrl.match(/\.(mp4|webm|ogg)$/i)) {
       return (
         <video
           controls
@@ -201,20 +156,13 @@ function Vault() {
             background: "black",
           }}
         >
-          <source
-            src={fileUrl}
-          />
+          <source src={fileUrl} />
         </video>
       );
     }
 
     // 🔥 AUDIO
-    if (
-      file.fileUrl.match(
-        /\.(mp3|wav|ogg)$/i
-      )
-    ) {
-
+    if (file.fileUrl.match(/\.(mp3|wav|ogg)$/i)) {
       return (
         <div
           style={{
@@ -224,8 +172,7 @@ function Vault() {
             justifyContent: "center",
             alignItems: "center",
             gap: "20px",
-            background:
-              "linear-gradient(135deg,#111827,#1e293b)",
+            background: "linear-gradient(135deg,#111827,#1e293b)",
           }}
         >
           <div
@@ -237,9 +184,7 @@ function Vault() {
           </div>
 
           <audio controls>
-            <source
-              src={fileUrl}
-            />
+            <source src={fileUrl} />
           </audio>
         </div>
       );
@@ -254,8 +199,7 @@ function Vault() {
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
-          background:
-            "linear-gradient(135deg,#111827,#1e293b)",
+          background: "linear-gradient(135deg,#111827,#1e293b)",
           gap: "15px",
         }}
       >
@@ -282,18 +226,15 @@ function Vault() {
   };
 
   return (
-
     <div
       style={{
         minHeight: "100vh",
-        background:
-          "linear-gradient(135deg,#020617,#111827,#0f172a)",
+        background: "linear-gradient(135deg,#020617,#111827,#0f172a)",
         padding: "30px",
         color: "white",
         fontFamily: "Arial",
       }}
     >
-
       {/* 🔥 HEADER */}
       <div
         style={{
@@ -304,9 +245,7 @@ function Vault() {
           flexWrap: "wrap",
         }}
       >
-
         <div>
-
           <h1
             style={{
               margin: 0,
@@ -323,7 +262,6 @@ function Vault() {
           >
             Hidden Secure Gallery
           </p>
-
         </div>
 
         <div
@@ -332,24 +270,18 @@ function Vault() {
             gap: "12px",
           }}
         >
-
           {/* 🔥 LOCK */}
           <button
             onClick={() => {
+              localStorage.removeItem("vaultUnlocked");
 
-              localStorage.removeItem(
-                "vaultUnlocked"
-              );
-
-              window.location.href =
-                "/calc";
+              window.location.href = "/calc";
             }}
             style={{
               padding: "12px 18px",
               border: "none",
               borderRadius: "12px",
-              background:
-                "#ef4444",
+              background: "#ef4444",
               color: "white",
               cursor: "pointer",
               fontWeight: "bold",
@@ -365,8 +297,7 @@ function Vault() {
               padding: "12px 18px",
               border: "none",
               borderRadius: "12px",
-              background:
-                "#2563eb",
+              background: "#2563eb",
               color: "white",
               cursor: "pointer",
               fontWeight: "bold",
@@ -374,25 +305,37 @@ function Vault() {
           >
             Logout
           </button>
-
         </div>
-
       </div>
 
       {/* 🔥 UPLOAD BOX */}
       <div
         style={{
-          background:
-            "rgba(255,255,255,0.05)",
+          background: "rgba(255,255,255,0.05)",
           padding: "25px",
           borderRadius: "22px",
           marginBottom: "35px",
         }}
       >
-
-        <h2>
-          📁 Upload File / Video / Audio
+        <h2
+          style={{
+            color: "white",
+            marginBottom: "18px",
+            fontSize: "28px",
+            fontWeight: "bold",
+          }}
+        >
+          🔐 Add To Secure Vault
         </h2>
+
+        <p
+          style={{
+            color: "#94a3b8",
+            marginBottom: "20px",
+          }}
+        >
+          Hide photos, videos, audio and private files securely
+        </p>
 
         <div
           style={{
@@ -402,14 +345,9 @@ function Vault() {
             alignItems: "center",
           }}
         >
-
           <input
             type="file"
-            onChange={(e) =>
-              setSelectedFile(
-                e.target.files[0]
-              )
-            }
+            onChange={(e) => setSelectedFile(e.target.files[0])}
           />
 
           <button
@@ -418,8 +356,7 @@ function Vault() {
               padding: "12px 22px",
               border: "none",
               borderRadius: "12px",
-              background:
-                "#f97316",
+              background: "#f97316",
               color: "white",
               cursor: "pointer",
               fontWeight: "bold",
@@ -427,14 +364,11 @@ function Vault() {
           >
             Upload
           </button>
-
         </div>
-
       </div>
 
       {/* 🔥 EMPTY */}
       {files.length === 0 && (
-
         <div
           style={{
             textAlign: "center",
@@ -451,26 +385,20 @@ function Vault() {
       <div
         style={{
           display: "grid",
-          gridTemplateColumns:
-            "repeat(auto-fit,minmax(280px,1fr))",
+          gridTemplateColumns: "repeat(auto-fit,minmax(280px,1fr))",
           gap: "25px",
         }}
       >
-
         {files.map((file) => (
-
           <div
             key={file.id}
             style={{
-              background:
-                "rgba(255,255,255,0.05)",
+              background: "rgba(255,255,255,0.05)",
               borderRadius: "22px",
               overflow: "hidden",
-              boxShadow:
-                "0 0 20px rgba(0,0,0,0.4)",
+              boxShadow: "0 0 20px rgba(0,0,0,0.4)",
             }}
           >
-
             {/* 🔥 PREVIEW */}
             {renderFilePreview(file)}
 
@@ -482,7 +410,6 @@ function Vault() {
                 padding: "15px",
               }}
             >
-
               {/* 🔓 OPEN */}
               <a
                 href={`https://vault-backend-i1fo.onrender.com/uploads/${file.fileUrl}`}
@@ -490,8 +417,7 @@ function Vault() {
                 rel="noreferrer"
                 style={{
                   textDecoration: "none",
-                  background:
-                    "#2563eb",
+                  background: "#2563eb",
                   padding: "10px 16px",
                   borderRadius: "10px",
                   color: "white",
@@ -504,51 +430,34 @@ function Vault() {
               {/* 🔥 RESTORE */}
               <button
                 onClick={async () => {
-
                   try {
+                    const response = await fetch(
+                      `https://vault-backend-i1fo.onrender.com/uploads/${file.fileUrl}`,
+                    );
 
-                    const response =
-                      await fetch(
-                        `https://vault-backend-i1fo.onrender.com/uploads/${file.fileUrl}`
-                      );
+                    const blob = await response.blob();
 
-                    const blob =
-                      await response.blob();
+                    const url = window.URL.createObjectURL(blob);
 
-                    const url =
-                      window.URL.createObjectURL(
-                        blob
-                      );
-
-                    const link =
-                      document.createElement(
-                        "a"
-                      );
+                    const link = document.createElement("a");
 
                     link.href = url;
 
-                    link.download =
-                      file.fileUrl;
+                    link.download = file.fileUrl;
 
-                    document.body.appendChild(
-                      link
-                    );
+                    document.body.appendChild(link);
 
                     // 🔥 DOWNLOAD
                     link.click();
 
-                    document.body.removeChild(
-                      link
-                    );
+                    document.body.removeChild(link);
 
-                    window.URL.revokeObjectURL(
-                      url
-                    );
+                    window.URL.revokeObjectURL(url);
 
                     // 🔥 DELETE FROM VAULT
                     await axios.delete(
                       `https://vault-backend-i1fo.onrender.com/files/delete/${file.id}`,
-                      authHeader
+                      authHeader,
                     );
 
                     // 🔥 REFRESH
@@ -556,37 +465,27 @@ function Vault() {
 
                     Swal.fire({
                       icon: "success",
-                      title:
-                        "File Restored ✅",
-                      text:
-                        "Downloaded to your device",
-                      background:
-                        "#0f172a",
+                      title: "File Restored ✅",
+                      text: "Downloaded to your device",
+                      background: "#0f172a",
                       color: "white",
-                      confirmButtonColor:
-                        "#22c55e",
+                      confirmButtonColor: "#22c55e",
                     });
-
                   } catch (err) {
-
                     console.error(err);
 
                     Swal.fire({
                       icon: "error",
-                      title:
-                        "Restore Failed ❌",
-                      text:
-                        "Something went wrong",
-                      background:
-                        "#0f172a",
+                      title: "Restore Failed ❌",
+                      text: "Something went wrong",
+                      background: "#0f172a",
                       color: "white",
                     });
                   }
                 }}
                 style={{
                   border: "none",
-                  background:
-                    "linear-gradient(135deg,#22c55e,#16a34a)",
+                  background: "linear-gradient(135deg,#22c55e,#16a34a)",
                   color: "white",
                   padding: "10px 16px",
                   borderRadius: "10px",
@@ -596,15 +495,10 @@ function Vault() {
               >
                 Restore
               </button>
-
             </div>
-
           </div>
-
         ))}
-
       </div>
-
     </div>
   );
 }
