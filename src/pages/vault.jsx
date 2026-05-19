@@ -249,7 +249,11 @@ function Vault() {
           <h1
             style={{
               margin: 0,
-              fontSize: "34px",
+              fontSize: "42px",
+              fontWeight: "bold",
+              color: "#ffffff",
+              textShadow: "0 0 20px rgba(255,255,255,0.15)",
+              letterSpacing: "1px",
             }}
           >
             🔐 Secret Vault
@@ -257,10 +261,13 @@ function Vault() {
 
           <p
             style={{
-              color: "#94a3b8",
+              color: "#cbd5e1",
+              marginTop: "10px",
+              fontSize: "18px",
+              letterSpacing: "0.5px",
             }}
           >
-            Hidden Secure Gallery
+            Hide Photos, Videos & Files Securely
           </p>
         </div>
 
