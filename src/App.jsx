@@ -1,9 +1,9 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import Login from "./pages/Login";
+import Login from "./pages/login";
 import Calculator from "./pages/Calculator";
-import Vault from "./pages/Vault";
-import Register from "./pages/Register";
+import Vault from "./pages/vault";
+import Register from "./pages/register";
 
 import ProtectedRoute from "./components/ProtectedRoute";
 
