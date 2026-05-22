@@ -99,19 +99,25 @@ function Login() {
 
     } catch (err) {
 
-      console.error(err);
+  console.error(err);
 
-      Swal.fire({
-        icon: "error",
-        title: "Login Failed ❌",
-        text:
-          "Invalid username or password",
-        background: "#0f172a",
-        color: "white",
-        confirmButtonColor: "#ef4444"
-      });
+  Swal.fire({
+    icon: "error",
 
-    }
+    title: "Login Failed ❌",
+
+    text:
+      err.response?.data?.message ||
+      "Invalid username or password",
+
+    background: "#0f172a",
+
+    color: "white",
+
+    confirmButtonColor: "#ef4444"
+  });
+
+}
 
   };
 
